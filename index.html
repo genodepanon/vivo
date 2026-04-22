@@ -1,66 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUTH</title>
-
-    <style>
-        body {
-            background: #1a0406;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: system-ui;
-        }
-
-        .box {
-            background: #0f0203;
-            border: 1px solid #e03a3e;
-            padding: 2rem;
-            border-radius: 20px;
-            width: 300px;
-            text-align: center;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ac2c33;
-            background: #1f070a;
-            color: white;
-            margin-bottom: 15px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #d92b33;
-            border: none;
-            border-radius: 20px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIVO V12020 · AUTH</title>
 </head>
 <body>
 
-<div class="box">
-    <input type="text" id="authKey" placeholder="40 key">
-    <button id="submitAuthBtn">SUBMIT</button>
-</div>
+<input type="text" id="authKey" placeholder="Enter 40-key">
+<button onclick="checkKey()">SUBMIT</button>
 
 <script>
 (function(){
 
-    const input = document.getElementById('authKey');
-    const btn = document.getElementById('submitAuthBtn');
+    const i = document.getElementById('authKey');
 
-    // 🔐 hidden 40-char key
-    const KEY = (
+    // 🔐 Hidden-style key (split so it's less obvious)
+    const _k = (
         "v9x2a7b4c1d8e5f0" +
         "g6h3i9j2k7l4m1n8" +
         "p5q0r6s3"
@@ -70,25 +26,23 @@
         return v.replace(/\s+/g,'').replace(/-/g,'');
     }
 
-    function check(){
-        const v = clean(input.value);
+    window.checkKey = function(){
 
-        if(v === KEY){
-            window.location.href = "nextweb.html";
-        } else {
-            alert("WRONG");
-            input.select();
+        const v = clean(i.value);
+
+        if(v.length !== 40){
+            alert("INVALID KEY LENGTH");
+            return;
         }
+
+        if(v !== _k){
+            alert("ACCESS DENIED");
+            return;
+        }
+
+        alert("ACCESS GRANTED");
+        window.location.href = "nextweb.html";
     }
-
-    btn.addEventListener('click', check);
-
-    input.addEventListener('keypress', function(e){
-        if(e.key === 'Enter'){
-            e.preventDefault();
-            check();
-        }
-    });
 
 })();
 </script>
